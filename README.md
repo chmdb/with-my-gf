@@ -7,7 +7,7 @@
 - **편지 내용**: `index.html`의 `section-letter` 부분
 - **답장 받을 메일**: `script.js` 맨 위 `FORMSPREE_ENDPOINT`
 - **떠다니는 이미지**: `script.js`의 `FLOATING_IMAGES` (이미지는 `assets/` 폴더에)
-- CSS/JS를 고친 뒤에는 `index.html`의 `?v=5` 숫자를 하나 올리면 상대방 폰에서 캐시 없이 바로 반영됩니다.
+- CSS/JS를 고친 뒤에는 `index.html`의 `?v=6` 숫자를 하나 올리면 상대방 폰에서 캐시 없이 바로 반영됩니다.
 
 ## GitHub Pages 배포
 

@@ -36,50 +36,74 @@ document.addEventListener('DOMContentLoaded', () => {
   // 코스 선택 데이터 저장 변수
   let selectedCourses = [];
 
-  // 1. 둥둥 떠다니는 배경 파티클 생성 함수 (이미지 또는 하트)
+  // 0. 구름이(오리지널 구름 캐릭터) & 배경 구름 그리기
+  const CLOUD_PATH = 'M30 70 C14 70 10 50 24 44 C22 28 42 20 52 30 C58 12 88 14 90 34 C106 34 110 60 94 70 Z';
+  const BUDDY_SVG = `
+    <svg viewBox="0 0 120 80" width="100%" height="100%" style="overflow:visible">
+      <path d="${CLOUD_PATH}" fill="#fff" stroke="#3A4660" stroke-width="3.4" stroke-linejoin="round"/>
+      <ellipse cx="38" cy="38" rx="6" ry="3.2" fill="#EAF6FE" transform="rotate(-25 38 38)"/>
+      <ellipse class="eye" cx="51" cy="50" rx="3.4" ry="4" fill="#3A4660"/>
+      <ellipse class="eye" cx="71" cy="50" rx="3.4" ry="4" fill="#3A4660"/>
+      <ellipse cx="42" cy="58.5" rx="5.6" ry="3.2" fill="#FFB3C6"/>
+      <ellipse cx="80" cy="58.5" rx="5.6" ry="3.2" fill="#FFB3C6"/>
+      <path d="M57 56 Q61 60.5 65 56" fill="none" stroke="#3A4660" stroke-width="2.6" stroke-linecap="round"/>
+    </svg>`;
+  const SKY_CLOUD_SVG = `<svg viewBox="0 0 120 80" width="100%" height="100%"><path d="${CLOUD_PATH}" fill="#fff"/></svg>`;
+
+  document.querySelectorAll('.cloud-buddy').forEach(el => { el.innerHTML = BUDDY_SVG; });
+  document.querySelectorAll('.sky-cloud').forEach(el => { el.innerHTML = SKY_CLOUD_SVG; });
+
+  // 1. 배경에 천천히 떨어지는 캐릭터 + 파스텔 반짝이
+  const GLYPHS = ['♥', '✦', '✧', '♥', '✦'];
+  const GLYPH_COLORS = ['#7EC3F0', '#A3D6F7', '#FFFFFF', '#FFB3C6', '#4C9FDA'];
+
   function createFloatingItem() {
     const item = document.createElement('div');
     item.classList.add('floating-item');
-    
-    // FLOATING_IMAGES에 등록된 이미지가 있는 경우 이미지 사용, 없으면 기본 하트 아이콘
-    if (typeof FLOATING_IMAGES !== 'undefined' && FLOATING_IMAGES.length > 0) {
-      const randomImg = FLOATING_IMAGES[Math.floor(Math.random() * FLOATING_IMAGES.length)];
+
+    const useImage = FLOATING_IMAGES.length > 0 && Math.random() < 0.45;
+    let size;
+
+    if (useImage) {
       const img = document.createElement('img');
-      img.src = randomImg;
-      img.alt = 'floating character';
+      img.src = FLOATING_IMAGES[Math.floor(Math.random() * FLOATING_IMAGES.length)];
+      img.alt = '';
       img.classList.add('floating-img');
       item.appendChild(img);
+      size = Math.random() * 14 + 30; // 30 ~ 44px
+      item.style.width = `${size}px`;
+      item.style.height = `${size}px`;
     } else {
-      const heartTypes = ['fa-heart', 'fa-heart-circle-bolt', 'fa-envelope-open-heart'];
-      const randomType = heartTypes[Math.floor(Math.random() * heartTypes.length)];
-      item.innerHTML = `<i class="fa-solid ${randomType}"></i>`;
+      const glyph = document.createElement('span');
+      glyph.classList.add('floating-glyph');
+      glyph.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+      glyph.style.color = GLYPH_COLORS[Math.floor(Math.random() * GLYPH_COLORS.length)];
+      size = Math.random() * 12 + 14; // 14 ~ 26px
+      glyph.style.fontSize = `${size}px`;
+      item.appendChild(glyph);
     }
-    
-    // 무작위 수평 시작 위치 및 크기 설정
+
     item.style.left = Math.random() * 100 + 'vw';
-    
-    // 둥실둥실 뜨는 크기 랜덤 (이미지 크기에 적당한 크기: 30px ~ 55px)
-    const size = Math.random() * 25 + 30; 
-    item.style.width = `${size}px`;
-    item.style.height = `${size}px`;
-    
-    // 애니메이션 듀레이션 조절 (속도 랜덤, 사진이라 좀 더 느긋하게 6s ~ 10s)
-    const duration = Math.random() * 4 + 6; 
+
+    // 느긋하게 8s ~ 13s
+    const duration = Math.random() * 5 + 8;
     item.style.animationDuration = `${duration}s`;
-    
-    // 불투명도 조절 (너무 튀지 않고 배경 느낌이 나게 0.3 ~ 0.7)
-    item.style.opacity = Math.random() * 0.4 + 0.3;
-    
+
     heartBg.appendChild(item);
-    
-    // 애니메이션이 끝나면 요소 제거
-    setTimeout(() => {
-      item.remove();
-    }, duration * 1000);
+    setTimeout(() => item.remove(), duration * 1000);
   }
 
-  // 0.5초마다 파티클 생성
-  setInterval(createFloatingItem, 500);
+  setInterval(createFloatingItem, 900);
+
+  // 1-2. 진행 단계 점 표시
+  const progressDots = document.querySelectorAll('#progress .dot');
+  function updateProgress(step) {
+    progressDots.forEach((dot, i) => {
+      dot.classList.toggle('done', i < step);
+      dot.classList.toggle('current', i === step);
+    });
+  }
+  updateProgress(0);
 
   // 2. 화면 전환 함수 (SPA 페이드인/아웃 구현)
   function switchScreen(fromScreen, toScreen) {
@@ -92,6 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
       
       // 2단계: 다음 화면 준비
       toScreen.classList.add('active');
+      updateProgress(Number(toScreen.dataset.step || 0));
+      window.scrollTo(0, 0);
       // 브라우저 렌더링 동기화를 위한 짧은 지연
       setTimeout(() => {
         toScreen.style.opacity = '1';
@@ -111,7 +137,15 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // 4. [아니오] 버튼 회피 기능 (절대 클릭 불가능하게 도망치기)
+  const NO_TEXTS = ['아니…', '진짜…?', '다시 생각해봐 🥺', '안 돼~', '못 누르지롱 😝', '좋아 눌러줘 💕'];
+  let escapeCount = 0;
+
   function escapeButton(e) {
+    // 도망칠 때마다 문구가 바뀌고, [좋아] 버튼은 점점 커짐
+    escapeCount++;
+    btnNo.textContent = NO_TEXTS[Math.min(escapeCount, NO_TEXTS.length - 1)];
+    btnYes.style.setProperty('--grow', String(1 + Math.min(escapeCount, 8) * 0.06));
+
     // 버튼 크기
     const btnWidth = btnNo.offsetWidth;
     const btnHeight = btnNo.offsetHeight;
@@ -168,9 +202,9 @@ document.addEventListener('DOMContentLoaded', () => {
     btnNo.style.top = `${randomTop}px`;
     
     // 살짝 튕기는 듯한 귀여운 모션
-    btnNo.style.transform = 'scale(1.1)';
+    btnNo.style.setProperty('--grow', '1.1');
     setTimeout(() => {
-      btnNo.style.transform = 'scale(1)';
+      btnNo.style.setProperty('--grow', '1');
     }, 150);
   }
 
@@ -183,6 +217,17 @@ document.addEventListener('DOMContentLoaded', () => {
     btnNo.style.top = '';
     btnNo.style.zIndex = '';
     btnGroup.appendChild(btnNo);
+    escapeCount = 0;
+    btnNo.textContent = NO_TEXTS[0];
+    btnYes.style.removeProperty('--grow');
+  }
+
+  // 날짜를 "11월 21일 (토)" 형태로
+  function formatDate(value) {
+    const d = new Date(value + 'T00:00:00');
+    if (isNaN(d)) return value;
+    const days = ['일', '월', '화', '수', '목', '금', '토'];
+    return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일 (${days[d.getDay()]})`;
   }
 
   // 마우스 진입 및 터치 시작 시 도망가기 이벤트 리스너 등록
@@ -257,7 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.innerHTML = originalBtnText;
         
         // 날짜와 코멘트 띄우고 성공 모달 표시
-        confirmedDateSpan.textContent = selectedDate;
+        confirmedDateSpan.textContent = formatDate(selectedDate);
         document.getElementById('confirmed-idea').textContent = dateIdea;
         document.getElementById('confirmed-courses').textContent = coursesText;
         modalSuccess.classList.add('active');
@@ -283,7 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (response.ok) {
         // 성공 시
-        confirmedDateSpan.textContent = selectedDate;
+        confirmedDateSpan.textContent = formatDate(selectedDate);
         document.getElementById('confirmed-idea').textContent = dateIdea;
         document.getElementById('confirmed-courses').textContent = coursesText;
         modalSuccess.classList.add('active');

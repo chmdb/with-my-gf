@@ -2,130 +2,172 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#BFE4FC">
   <title>나랑 데이트 갈래? 💕</title>
-  <!-- SEO Meta Tags -->
   <meta name="description" content="세상에서 가장 귀여운 데이트 신청! 날짜를 골라줘!">
-  
-  <!-- Google Fonts - 귀여운 한글 폰트 적용 (Gamja Flower, Jua, Gowun Batang) -->
+  <meta property="og:title" content="너에게 편지가 도착했어 💌">
+  <meta property="og:description" content="톡 눌러서 열어봐!">
+
+  <!-- Google Fonts: Jua(제목) · Gowun Dodum(본문) · Gamja Flower(손글씨) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Jua&family=Gowun+Batang:wght@700&display=swap" rel="stylesheet">
-  
-  <!-- FontAwesome for cute icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Custom Stylesheets -->
-  <link rel="stylesheet" href="style.css?v=5">
+
+  <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
-  <!-- Background Heart Particles Container -->
-  <div class="heart-bg" id="heart-bg"></div>
+  <!-- 배경: 파스텔 블롭 + 떨어지는 캐릭터/반짝이 -->
+  <div class="bg-deco" aria-hidden="true">
+    <span class="blob blob-pink"></span>
+    <span class="blob blob-blue"></span>
+    <span class="blob blob-yellow"></span>
+    <span class="sky-cloud c1"></span>
+    <span class="sky-cloud c2"></span>
+    <span class="sky-cloud c3"></span>
+    <span class="sky-cloud c4"></span>
+  </div>
+  <div class="heart-bg" id="heart-bg" aria-hidden="true"></div>
 
-  <!-- SPA Main Container -->
+  <!-- 진행 단계 표시 -->
+  <nav class="progress" id="progress" aria-hidden="true">
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+  </nav>
+
   <main class="app-container">
-    
-    <!-- 1. 첫 번째 화면: 인트로 화면 -->
-    <section id="section-intro" class="screen-section active">
+
+    <!-- 1. 인트로 -->
+    <section id="section-intro" class="screen-section active" data-step="0">
       <div class="card intro-card">
+        <span class="letter-tag">💌 새 편지 1통</span>
+        <span class="sparkle s1">✦</span>
+        <span class="sparkle s2">✦</span>
+        <span class="sparkle s3">✧</span>
+
         <div class="mascot-wrapper">
-          <!-- 치이카와 스타일 캐릭터 이미지 (assets/mascot.png) -->
-          <!-- 나중에 교체하기 쉽도록 assets/mascot.png 경로 사용 -->
-          <img src="assets/SweetBabyHachiware2.webp" alt="귀여운 캐릭터" class="mascot-img" onerror="this.src='https://placehold.co/300x300/ffccd5/ff4d6d?text=Cute+Mascot+💕'">
+          <div class="mascot-frame">
+            <img src="assets/SweetBabyHachiware2.webp" alt="귀여운 캐릭터" class="mascot-img" onerror="this.src='https://placehold.co/300x300/ffccd5/ff4d6d?text=Cute+Mascot'">
+          </div>
+          <svg class="mini-heart" viewBox="0 0 100 100" aria-hidden="true">
+            <path d="M50 86 C20 66 6 48 10 30 C14 14 34 8 50 26 C66 8 86 14 90 30 C94 48 80 66 50 86 Z" fill="#F6A9B9" stroke="#3A4660" stroke-width="6" stroke-linejoin="round"/>
+            <ellipse cx="30" cy="32" rx="7" ry="4" fill="#fff" transform="rotate(-35 30 32)"/>
+          </svg>
+          <span class="cloud-buddy" aria-hidden="true"></span>
         </div>
-        <h1 class="intro-title">너에게 보낼 편지가 도착했어! 💌</h1>
-        <p class="blink-text">화면을 클릭해 봐! 💌</p>
+
+        <h1 class="title intro-title">너에게 보낼 <span class="mark">편지</span>가<br>도착했어!</h1>
+        <p class="tap-hint"><span class="tap-dot"></span>화면을 톡 눌러봐</p>
       </div>
     </section>
 
-    <!-- 1-2. 새로운 화면: 디지털 손편지 화면 -->
-    <section id="section-letter" class="screen-section">
+    <!-- 1-2. 손편지 -->
+    <section id="section-letter" class="screen-section" data-step="1">
       <div class="card letter-card">
+        <span class="tape" aria-hidden="true"></span>
         <div class="letter-paper">
           <div class="letter-header">
-            <h3>To. 내 사랑 연두에게 ❤️</h3>
+            <h3>To. 내 사랑 연두에게 💙</h3>
           </div>
           <div class="letter-body">
-            <p>안녕! 연두야 언제나 내 곁에서 큰 힘이 되어줘서 고마워. 🥰</p>
-            <p>너랑 맛있는 것도 많이 먹고, 예쁜 곳도 다니면서 소중하고 특별한 하루를 보내고 싶어서 이렇게 작은 편지를 보낸다! ✨</p>
-            <p>우리 곧 만나서 잊지 못할 행복한 추억을 만들어 보자! 하트 뿅뿅 많이 사랑해 ❤️</p>
+            <p>연두야! 오늘도 잘 지냈어? 🥰</p>
+            <p>요즘은 맑은 하늘만 봐도 네 생각이 나. 너랑 같이 있으면 흐린 날도 다 맑은 날이 되더라 ☁️</p>
+            <p>그래서 이번엔 내가 제대로 준비해 보려고! 맛있는 거 먹고, 예쁜 거 보고, 하루 종일 너랑 웃고 싶어.</p>
+            <p>시간 내줄 거지? 답장 기다릴게. 많이 많이 사랑해 💙</p>
           </div>
           <div class="letter-footer">
             <p>From. 너만을 생각하는 아저씨가 ✍️</p>
           </div>
         </div>
-        <button id="btn-read-letter" class="btn btn-yes">답장하러 가기 💌</button>
+        <button id="btn-read-letter" class="btn btn-yes btn-block">답장하러 가기 💌</button>
       </div>
     </section>
 
-    <!-- 2. 두 번째 화면: 데이트 신청 화면 -->
-    <section id="section-proposal" class="screen-section">
+    <!-- 2. 데이트 신청 -->
+    <section id="section-proposal" class="screen-section" data-step="2">
       <div class="card proposal-card">
-        <div class="heart-icon-wrapper">
-          <i class="fa-solid fa-heart beat-animation"></i>
+        <span class="cloud-buddy" aria-hidden="true"></span>
+        <span class="sparkle s1">✦</span>
+        <span class="sparkle s2">✧</span>
+
+        <div class="heart-badge" aria-hidden="true">
+          <svg viewBox="0 0 100 100">
+            <path d="M50 88 C20 68 5 50 9 30 C13 13 34 7 50 26 C66 7 87 13 91 30 C95 50 80 68 50 88 Z" fill="#F6A9B9" stroke="#3A4660" stroke-width="3.5" stroke-linejoin="round"/>
+            <ellipse cx="27" cy="31" rx="7" ry="4" fill="#fff" transform="rotate(-35 27 31)"/>
+            <circle cx="40" cy="47" r="3.4" fill="#3A4660"/>
+            <circle cx="60" cy="47" r="3.4" fill="#3A4660"/>
+            <ellipse cx="32" cy="56" rx="5" ry="3" fill="#E5788F" opacity="0.75"/>
+            <ellipse cx="68" cy="56" rx="5" ry="3" fill="#E5788F" opacity="0.75"/>
+            <path d="M45.5 53 Q50 57.5 54.5 53" fill="none" stroke="#3A4660" stroke-width="2.6" stroke-linecap="round"/>
+          </svg>
         </div>
-        <h2 class="question-text">나랑 데이트 하러 갈래? 💕</h2>
+
+        <p class="eyebrow">QUESTION</p>
+        <h2 class="title question-text">나랑 <span class="mark">데이트</span><br>하러 갈래?</h2>
         <div class="btn-group">
-          <!-- 예 버튼 -->
-          <button id="btn-yes" class="btn btn-yes">예! 💖</button>
+          <button id="btn-yes" class="btn btn-yes">좋아! 💖</button>
           <!-- 아니오 버튼 (마우스나 터치가 다가가면 도망감) -->
-          <button id="btn-no" class="btn btn-no">아니오 😢</button>
+          <button id="btn-no" class="btn btn-no">아니…</button>
         </div>
       </div>
     </section>
 
-    <!-- 2-2. 새로운 화면: 데이트 코스/메뉴 선택 화면 -->
-    <section id="section-course" class="screen-section">
+    <!-- 2-2. 데이트 코스 -->
+    <section id="section-course" class="screen-section" data-step="3">
       <div class="card course-card">
-        <h2 class="course-title">우리 만나서 뭐 하고 놀까?<br>원하는 코스를 골라줘! 😋</h2>
-        <p class="course-subtitle">(여러 개 골라도 돼! 💕)</p>
-        
+        <p class="eyebrow">DATE COURSE</p>
+        <h2 class="title">우리 만나서<br><span class="mark pink">뭐 하고</span> 놀까?</h2>
+        <p class="subtitle">여러 개 골라도 돼 💕</p>
+
         <div class="course-grid">
-          <!-- 코스 카드들 -->
-          <div class="course-item" data-value="맛집 탐방 🍝">
-            <div class="course-icon"><i class="fa-solid fa-utensils"></i></div>
+          <button type="button" class="course-item" data-value="맛집 탐방 🍝">
+            <span class="course-icon"><i class="fa-solid fa-utensils"></i></span>
             <span>맛집 탐방</span>
-          </div>
-          <div class="course-item" data-value="예쁜 카페 ☕">
-            <div class="course-icon"><i class="fa-solid fa-mug-hot"></i></div>
+          </button>
+          <button type="button" class="course-item" data-value="예쁜 카페 ☕">
+            <span class="course-icon"><i class="fa-solid fa-mug-hot"></i></span>
             <span>예쁜 카페</span>
-          </div>
-          <div class="course-item" data-value="영화 보기 🎬">
-            <div class="course-icon"><i class="fa-solid fa-film"></i></div>
+          </button>
+          <button type="button" class="course-item" data-value="영화 보기 🎬">
+            <span class="course-icon"><i class="fa-solid fa-film"></i></span>
             <span>영화 보기</span>
-          </div>
-          <div class="course-item" data-value="놀이공원 🎡">
-            <div class="course-icon"><i class="fa-solid fa-ticket"></i></div>
+          </button>
+          <button type="button" class="course-item" data-value="놀이공원 🎡">
+            <span class="course-icon"><i class="fa-solid fa-ticket"></i></span>
             <span>놀이공원</span>
-          </div>
-          <div class="course-item" data-value="산책/피크닉 🌳">
-            <div class="course-icon"><i class="fa-solid fa-tree"></i></div>
+          </button>
+          <button type="button" class="course-item" data-value="산책/피크닉 🌳">
+            <span class="course-icon"><i class="fa-solid fa-tree"></i></span>
             <span>산책/피크닉</span>
-          </div>
-          <div class="course-item" data-value="아이쇼핑 🛍️">
-            <div class="course-icon"><i class="fa-solid fa-bag-shopping"></i></div>
+          </button>
+          <button type="button" class="course-item" data-value="아이쇼핑 🛍️">
+            <span class="course-icon"><i class="fa-solid fa-bag-shopping"></i></span>
             <span>쇼핑/구경</span>
-          </div>
+          </button>
         </div>
-        
-        <button id="btn-course-next" class="btn btn-yes">다 골랐어! 언제 만날까? 📅</button>
+
+        <button id="btn-course-next" class="btn btn-yes btn-block">다 골랐어! 언제 만날까? 📅</button>
       </div>
     </section>
 
-    <!-- 3. 세 번째 화면: 날짜 선택 및 알림 화면 -->
-    <section id="section-calendar" class="screen-section">
+    <!-- 3. 날짜 선택 -->
+    <section id="section-calendar" class="screen-section" data-step="4">
       <div class="card calendar-card">
-        <div class="calendar-icon-wrapper">
-          <i class="fa-regular fa-calendar-days bounce-animation"></i>
-        </div>
-        <h2 class="calendar-title">우와! 그럼 우리 언제 만날까?<br>날짜를 골라줘! 📅</h2>
-        
-        <!-- Formspree / EmailJS 전송을 위한 폼 -->
+        <span class="cloud-buddy" aria-hidden="true"></span>
+        <div class="icon-badge" aria-hidden="true"><i class="fa-solid fa-calendar-days"></i></div>
+        <p class="eyebrow">WHEN</p>
+        <h2 class="title">우와! 그럼 우리<br><span class="mark">언제</span> 만날까?</h2>
+
+        <!-- Formspree 전송 폼 -->
         <form id="date-form" class="date-form">
           <div class="input-container">
-            <input type="text" id="date-idea-input" name="date_idea" placeholder="어떤 데이트가 하고 싶어? 💕 (예: 어디 맛집, 00영화)" required autocomplete="off">
+            <label class="field-label" for="date-idea-input">하고 싶은 데이트</label>
+            <input type="text" id="date-idea-input" name="date_idea" placeholder="예: 성수 파스타집, 00영화" required autocomplete="off">
           </div>
           <div class="input-container">
+            <label class="field-label" for="date-input">날짜</label>
             <input type="date" id="date-input" name="selected_date" required>
             <span class="custom-calendar-btn"><i class="fa-regular fa-calendar"></i></span>
           </div>
@@ -135,22 +177,29 @@
     </section>
   </main>
 
-  <!-- 4. 전송 완료 성공 모달 -->
+  <!-- 4. 완료 모달: 데이트 티켓 -->
   <div id="modal-success" class="modal-overlay">
     <div class="modal-content">
-      <div class="modal-heart-wrapper">
-        <i class="fa-solid fa-face-kiss-wink-heart animate-pop"></i>
+      <span class="cloud-buddy" aria-hidden="true"></span>
+      <div class="ticket-mascot">
+        <img src="assets/SweetBabyHachiware2.webp" alt="">
       </div>
-      <h3>성공적으로 예약됐어!</h3>
-      <p>하고 싶은 데이트: <span id="confirmed-idea" class="highlight-idea"></span></p>
-      <p>데이트 코스: <span id="confirmed-courses" class="highlight-courses"></span></p>
-      <p>우리 데이트 날짜: <span id="confirmed-date" class="highlight-date">2026-06-25</span></p>
+      <p class="eyebrow">DATE TICKET</p>
+      <h3>예약 완료!</h3>
+
+      <div class="ticket-divider" aria-hidden="true"></div>
+
+      <dl class="ticket-info">
+        <div><dt>날짜</dt><dd><span id="confirmed-date" class="highlight-date"></span></dd></div>
+        <div><dt>코스</dt><dd id="confirmed-courses"></dd></div>
+        <div><dt>하고 싶은 것</dt><dd id="confirmed-idea"></dd></div>
+      </dl>
+
       <p class="modal-subtext">그날 봐 ❤️</p>
-      <button id="btn-close-modal" class="btn btn-close">기대된다! 🥰</button>
+      <button id="btn-close-modal" class="btn btn-yes btn-block">기대된다! 🥰</button>
     </div>
   </div>
 
-  <!-- Javascript File -->
-  <script src="script.js?v=5"></script>
+  <script src="script.js?v=7"></script>
 </body>
 </html>
