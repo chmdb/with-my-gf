@@ -1,0 +1,672 @@
+/* Reset & Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Jua', 'Gamja Flower', sans-serif;
+  user-select: none;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background: linear-gradient(135deg, #FFE5EC 0%, #FFF0F3 50%, #FEF9E7 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* Floating Hearts Background */
+.heart-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.floating-heart {
+  position: absolute;
+  bottom: -80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: floatUp 8s linear forwards;
+  pointer-events: none;
+  color: rgba(255, 77, 109, 0.4);
+  font-size: 20px;
+}
+
+.floating-item {
+  position: absolute;
+  top: -50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: rainDown 8s linear forwards;
+  pointer-events: none;
+}
+
+.floating-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 204, 213, 0.6);
+  box-shadow: 0 3px 6px rgba(255, 77, 109, 0.1);
+  background-color: white;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(0.8);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-110vh) rotate(360deg) scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes rainDown {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(115vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* App Container & SPA Sections */
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  padding: 20px;
+}
+
+.screen-section {
+  display: none;
+  width: 100%;
+  max-width: 480px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.screen-section.active {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Cute Card Component */
+.card {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border: 4px solid #FFF;
+  border-radius: 30px;
+  padding: 40px 30px;
+  box-shadow: 0 15px 35px rgba(255, 77, 109, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+/* 1. Intro Screen Styles */
+#section-intro {
+  cursor: pointer;
+}
+
+.mascot-wrapper {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background-color: #FFF;
+  border: 6px solid #FFCCD5;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(255, 77, 109, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+  animation: floatMascot 3s ease-in-out infinite;
+}
+
+.mascot-img {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.intro-title {
+  font-size: 2rem;
+  color: #ff4d6d;
+  margin-bottom: 20px;
+  word-break: keep-all;
+  line-height: 1.4;
+  text-shadow: 2px 2px 0px #FFF;
+}
+
+.blink-text {
+  font-size: 1.2rem;
+  color: #ff758f;
+  animation: blink 1.2s infinite alternate;
+  font-weight: bold;
+}
+
+@keyframes floatMascot {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes blink {
+  0% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+/* 2. Proposal Screen Styles */
+.heart-icon-wrapper {
+  font-size: 4rem;
+  color: #ff4d6d;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 5px 10px rgba(255, 77, 109, 0.3));
+}
+
+.beat-animation {
+  animation: heartBeat 1.2s infinite;
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.1); }
+  40% { transform: scale(1.05); }
+  60% { transform: scale(1.15); }
+}
+
+.question-text {
+  font-size: 2.2rem;
+  color: #ff4d6d;
+  margin-bottom: 40px;
+  word-break: keep-all;
+  line-height: 1.4;
+}
+
+.btn-group {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  justify-content: center;
+  position: relative;
+  min-height: 70px;
+}
+
+/* Buttons */
+.btn {
+  padding: 15px 35px;
+  font-size: 1.3rem;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-family: inherit;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+}
+
+.btn-yes {
+  background: linear-gradient(135deg, #ff758f 0%, #ff4d6d 100%);
+  color: white;
+  border: 3px solid #fff;
+  z-index: 10;
+}
+
+.btn-yes:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 20px rgba(255, 77, 109, 0.3);
+}
+
+.btn-yes:active {
+  transform: scale(0.95);
+}
+
+.btn-no {
+  background-color: #fff0f3;
+  color: #ff758f;
+  border: 3px solid #ffccd5;
+  transition: left 0.1s ease, top 0.1s ease, transform 0.2s;
+  position: relative;
+}
+
+.btn-no.escaped {
+  position: fixed;
+  z-index: 999;
+}
+
+/* 3. Calendar Screen Styles */
+.calendar-icon-wrapper {
+  font-size: 4rem;
+  color: #ff85a1;
+  margin-bottom: 20px;
+}
+
+.bounce-animation {
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
+.calendar-title {
+  font-size: 1.8rem;
+  color: #ff4d6d;
+  margin-bottom: 30px;
+  word-break: keep-all;
+  line-height: 1.4;
+}
+
+.date-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+}
+
+.input-container {
+  position: relative;
+  width: 85%;
+}
+
+/* Beautiful Input styling */
+input[type="date"],
+input[type="text"] {
+  width: 100%;
+  padding: 15px 20px;
+  font-size: 1.2rem;
+  color: #ff758f;
+  background-color: #fff;
+  border: 3px solid #ffccd5;
+  border-radius: 20px;
+  outline: none;
+  transition: all 0.3s;
+  text-align: center;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+input[type="date"] {
+  cursor: pointer;
+}
+
+input[type="text"]::placeholder {
+  color: #ffb3c1;
+  font-size: 1.05rem;
+}
+
+input[type="date"]:focus,
+input[type="text"]:focus {
+  border-color: #ff4d6d;
+  box-shadow: 0 0 15px rgba(255, 77, 109, 0.2);
+}
+
+.custom-calendar-btn {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ff758f;
+  pointer-events: none;
+  font-size: 1.3rem;
+}
+
+.btn-submit {
+  background: linear-gradient(135deg, #ff85a1 0%, #ff4d6d 100%);
+  color: white;
+  width: 85%;
+  border: 3px solid #fff;
+}
+
+.btn-submit:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(255, 77, 109, 0.25);
+}
+
+.btn-submit:active {
+  transform: scale(0.95);
+}
+
+/* 4. Success Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 240, 243, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background: white;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 30px;
+  padding: 40px 30px;
+  border: 4px solid #ffccd5;
+  box-shadow: 0 20px 50px rgba(255, 77, 109, 0.25);
+  text-align: center;
+  transform: scale(0.7);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-overlay.active .modal-content {
+  transform: scale(1);
+}
+
+.modal-heart-wrapper {
+  font-size: 5rem;
+  color: #ff4d6d;
+  margin-bottom: 20px;
+}
+
+.animate-pop {
+  animation: popEffect 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite alternate;
+}
+
+@keyframes popEffect {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.15); }
+}
+
+.modal-content h3 {
+  font-size: 2rem;
+  color: #ff4d6d;
+  margin-bottom: 15px;
+}
+
+.modal-content p {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.highlight-date {
+  color: #ff4d6d;
+  font-weight: bold;
+  font-size: 1.4rem;
+  background-color: #fff0f3;
+  padding: 4px 12px;
+  border-radius: 12px;
+  border: 2px dashed #ffccd5;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.highlight-idea {
+  color: #ff758f;
+  font-weight: bold;
+  font-size: 1.2rem;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.modal-subtext {
+  font-size: 1.4rem !important;
+  color: #ff758f !important;
+  font-weight: bold;
+  margin-top: 15px;
+  margin-bottom: 25px !important;
+}
+
+.btn-close {
+  background: linear-gradient(135deg, #ffccd5 0%, #ff85a1 100%);
+  color: white;
+  width: 80%;
+  border: 3px solid #fff;
+}
+
+.btn-close:hover {
+  transform: scale(1.05);
+}
+
+/* Digital Hand-written Letter Styles */
+.letter-card {
+  max-width: 480px;
+  padding: 30px 25px;
+}
+
+.letter-paper {
+  width: 100%;
+  background: #fdfaf2; /* Soft warm paper tone */
+  border: 2px solid #f3e5c8;
+  border-radius: 15px;
+  padding: 25px 20px;
+  box-shadow: 0 5px 15px rgba(218, 165, 32, 0.08);
+  margin-bottom: 25px;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.letter-paper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20px;
+  width: 2px;
+  height: 100%;
+  background-color: #ffd6db; /* Pink margin line */
+}
+
+.letter-header h3 {
+  font-family: 'Jua', sans-serif;
+  color: #d85c70;
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  padding-left: 15px;
+}
+
+.letter-body {
+  font-family: 'Gamja Flower', cursive;
+  color: #4a4a4a;
+  font-size: 1.45rem;
+  line-height: 1.8;
+  padding-left: 15px;
+  word-break: keep-all;
+}
+
+.letter-body p {
+  margin-bottom: 15px;
+}
+
+.letter-body p:last-child {
+  margin-bottom: 0;
+}
+
+.letter-footer {
+  text-align: right;
+  margin-top: 15px;
+  font-family: 'Gamja Flower', cursive;
+  font-size: 1.45rem;
+  color: #d85c70;
+  font-weight: bold;
+}
+
+/* Course Selection Styles */
+.course-card {
+  max-width: 480px;
+  padding: 30px 25px;
+}
+
+.course-title {
+  font-size: 1.8rem;
+  color: #ff4d6d;
+  margin-bottom: 5px;
+  line-height: 1.4;
+  word-break: keep-all;
+}
+
+.course-subtitle {
+  font-size: 1.05rem;
+  color: #ff85a1;
+  margin-bottom: 25px;
+  font-weight: bold;
+}
+
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+.course-item {
+  background-color: white;
+  border: 3px solid #ffccd5;
+  border-radius: 20px;
+  padding: 15px 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 8px rgba(255, 77, 109, 0.05);
+}
+
+.course-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(255, 77, 109, 0.12);
+  border-color: #ff85a1;
+}
+
+.course-item .course-icon {
+  font-size: 2rem;
+  color: #ff758f;
+  transition: transform 0.2s;
+}
+
+.course-item span {
+  font-size: 1.1rem;
+  color: #ff4d6d;
+  font-weight: bold;
+}
+
+/* Selected state */
+.course-item.selected {
+  background: linear-gradient(135deg, #ff85a1 0%, #ff4d6d 100%);
+  border-color: #fff;
+  transform: scale(1.02);
+  box-shadow: 0 8px 20px rgba(255, 77, 109, 0.25);
+}
+
+.course-item.selected .course-icon {
+  color: white;
+  transform: scale(1.15);
+}
+
+.course-item.selected span {
+  color: white;
+}
+
+.highlight-courses {
+  color: #ff4d6d;
+  font-weight: bold;
+  font-size: 1.2rem;
+  background-color: #fff0f3;
+  padding: 4px 12px;
+  border-radius: 12px;
+  border: 2px dashed #ffccd5;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+/* Responsive adjust */
+@media (max-width: 480px) {
+  .card {
+    padding: 30px 20px;
+  }
+  .intro-title {
+    font-size: 1.8rem;
+  }
+  .question-text {
+    font-size: 1.8rem;
+  }
+  .btn {
+    padding: 12px 25px;
+    font-size: 1.1rem;
+  }
+  .course-grid {
+    gap: 10px;
+  }
+  .course-item {
+    padding: 12px 8px;
+  }
+  .course-item .course-icon {
+    font-size: 1.6rem;
+  }
+  .course-item span {
+    font-size: 0.95rem;
+  }
+}
